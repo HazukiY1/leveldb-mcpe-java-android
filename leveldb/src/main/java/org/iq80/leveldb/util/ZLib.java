@@ -41,12 +41,12 @@ public final class ZLib
     {
         Inflater inflater = (raw ? INFLATER_RAW : INFLATER).get();
         try {
-            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            ByteBuffer buffer = ByteBuffer.allocate(Math.max(1024, compressed.remaining() * 2));
             inflater.setInput(compressed);
             while (!inflater.finished()) {
                 if (inflater.inflate(buffer) == 0) {
                     // Grow buffer
-                    ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() + 1024);
+                    ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() + Math.max(1024, (compressed.remaining() * 2)));
                     int position = buffer.position();
 
                     // Reset reader index
