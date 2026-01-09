@@ -73,7 +73,7 @@ class MMRandomInputFile implements RandomInputFile
         ByteBuffer buf;
         try {
             buf = (ByteBuffer) data.getClass().getMethod("duplicate").invoke(data);
-        } catch(Exception ignored) {
+        } catch (Exception ignored) {
             int oriPos = data.position();
             int oriLimit = data.limit();
 
