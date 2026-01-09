@@ -33,7 +33,16 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml -DskipTests
-
+        
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            **/target/*.jar
+            **/target/*.war
+            **/target/*.zip
+          
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@f97a4078d80bca790cd68e93a88da11a056ac0a3
