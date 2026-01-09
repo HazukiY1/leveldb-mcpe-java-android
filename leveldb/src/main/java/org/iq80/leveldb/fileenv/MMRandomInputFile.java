@@ -72,19 +72,19 @@ class MMRandomInputFile implements RandomInputFile
         int newPosition = (int) (data.position() + offset);
         ByteBuffer buf;
         try {
-            buf = (ByteBuffer) data.getClass().getMethod(duplicate).invoke(data);
+            buf = (ByteBuffer) data.getClass().getMethod("duplicate").invoke(data);
         } catch(Exception ignored) {
-            nt oriPos = data.position();
+            int oriPos = data.position();
             int oriLimit = data.limit();
-        
+
             data.position(newPosition);
             data.limit(newPosition + length);
-            buffer = data.slice();
-        
+            buf = data.slice();
+
             data.position(oriPos);
             data.limit(oriLimit);
         }
-        return buffer.order(ByteOrder.LITTLE_ENDIAN).clear().limit(newPosition + length).position(newPosition);
+        return buf.order(ByteOrder.LITTLE_ENDIAN).clear().limit(newPosition + length).position(newPosition);
         // return (ByteBuffer) data.duplicate().order(ByteOrder.LITTLE_ENDIAN).clear().limit(newPosition + length).position(newPosition);
     }
 
